@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1537280888065.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "551525202",
+    "id" : "187CBDF4",
+    "lastKnownWriteTime" : 1537453241,
+    "last_content_update" : 1537453241233,
+    "path" : "~/datascience1/datawrangling1/dataimport.Rmd",
+    "project_path" : "dataimport.Rmd",
+    "properties" : {
+        "cursorPosition" : "19,250",
+        "scrollLine" : "2",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

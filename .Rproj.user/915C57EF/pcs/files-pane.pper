@@ -1,0 +1,9 @@
+{
+    "path" : "~/datascience1/datawrangling1",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}
