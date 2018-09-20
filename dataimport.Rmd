@@ -15,7 +15,7 @@ library(tidyverse)
 Import my first csv. 
 
 ```{r import}
-litters_data <- read_csv(file = "./data/FAS_litters.csv", col_types = "ciiiii")
+litters_data <- read_csv(file = "./data/FAS_litters.csv")
 litters_data <- janitor::clean_names(litters_data)
 # Using the package::function notation helps specify the function associated with a specific package. It's safer than loading the package up top in your library, because it removes the possibility of using a same-named function from the wrong package
 pups_data <- read_csv(file = "./data/FAS_pups.csv")
@@ -39,4 +39,98 @@ mlb_subset <- readxl::read_excel(path = "./data/mlb11.xlsx",range = "A1:E17")
 pulse_data <- haven::read_sas("./data/public_pulse_data.sas7bdat")
 ```
 
+## Manipulate Data
+
+select what you want to keep by choosing, 
+
+```{r select by keeping}
+select(litters_data, group, gd_of_birth:pups_survive)
+
+```
+
+... or by saying what you what to remove
+
+```{r select by removing}
+select(litters_data, -litter_number)
+```
+
+```{r select and rename}
+select(litters_data, group, litter_number, gest_day_0_weight = gd0_weight)
+# both selecting gd0 weight and renaming it.
+# if all you want to do is rename one of the variables without subsetting/selecting
+rename(litters_data, gest_day_0_weight = gd0_weight)
+```
+
+`select_helpers`: These functions allow you to select variables based on their names.
+Select from the litters data things that start with "gd"
+
+```{r use select_helpers}
+select(litters_data, starts_with("gd"))
+select(litters_data, litter_number, starts_with("pup"))
+#Order from data
+select(litters_data, litter_number, everything())
+```
+
+```{r learning assessment for select variables}
+select(pups_data, litter_number, sex, pd_ears)
+```
+
+## Filter Observations
+
+You filter when you'd like to eliminate some rows from your dataset. You want to take things out or keep them in based on a feature of a variable that are either `TRUE` or `FALSE`. 
+
+You will often filter using comparison operators `(>, >=, <, <=, ==, and !=)`. You may also use `%in%` to detect if values appear in a set, and `is.na()` to find missing values. The results of comparisons are logical – the statement is `TRUE` or `FALSE` depending on the values you compare – and can be combined with other comparisons using the logical operators `&` and `|` (this means or), or negated using `!`.
+
+Be careful about very confusing logical operations.
+
+```{r filtering}
+filter(litters_data, gd0_weight >= 25)
+filter(litters_data, gd0_weight < 25)
+
+filter(litters_data, pups_born_alive == 8)
+
+filter(litters_data, !is.na(gd0_weight))
+filter(litters_data, !is.na(gd18_weight))
+
+filter(litters_data, group == "Low8" | group == "Low7")
+filter(litters_data, group %in% c("Low8","Low7"))
+
+filter(litters_data, pups_born_alive %in% 4:6)
+filter(litters_data, pups_born_alive %in% 4:6, !is.na(gd0_weight))
+```
+
+Learning assessment: in the pups data.
+```{r learning assessment 2}
+filter(pups_data, sex == 1)
+filter(pups_data, sex == 2, pd_walk < 11)
+
+```
+
+## Mutate
+
+```{r mutate}
+
+mutate(litters_data,
+  wt_gain = gd18_weight - gd0_weight,
+  group = tolower(group)
+      )
+```
+
+## Arrange
+
+```{r}
+arrange(litters_data, gd0_weight)
+
+arrange(litters_data, desc(pups_born_alive), gd0_weight)
+
+#shouldnt change any of your analysis results, but useful to take a look at as an intermediate step.
+```
+
+# %>% 
+
+let's pipe like mary berry
+
+```{r}
+
+```
 
